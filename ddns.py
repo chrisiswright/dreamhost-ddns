@@ -5,9 +5,10 @@ import time
 dh_api_url = "https://api.dreamhost.com/?key="
 api_key = "API-KEY-GOES-HERE"
 fqdn = "FQDN-GOES-HERE"
+log_loc = "/tmp/ddns.log"   # Change this to wherever you want your logs to go.
 
 logging.basicConfig(
-    filename='ddns.log',
+    filename=log_loc,
     level=logging.DEBUG,
     format='%(asctime)s %(levelname)-8s %(message)s',
     datefmt='%Y-%m-%d %H:%M:%S',  # basic format
