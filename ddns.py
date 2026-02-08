@@ -46,9 +46,7 @@ for line in output_text.splitlines():
         break
 
 # Now use current_dns
-if current_dns:
-    logging.info(f"IP is: {current_dns}")
-else:
+if not current_dns:
     logging.info("DNS A record not found. Adding " + public_ipv4 + " as A record for " + fqdn + ".")
     add_dns = (dh_api_url + api_key + "&cmd=dns-add_record&record=" + fqdn + "&type=A&value=" + public_ipv4)
     addDNS = subprocess.run(
@@ -64,13 +62,12 @@ else:
 
 if(public_ipv4 == current_dns):
     logging.info("Public IP (" + public_ipv4 + ") and A record for " + fqdn + " (" + current_dns + ") match. Nothing to do.")
-    exit
-elif current_dns == None:
-    logging.info("No current DNS A record.")
-    exit
-else:       # Update the A record if Public IP and DNS A record doesn't match.
+    raise SystemExit(0)
+
+else:  
+    # Update the A record if Public IP and DNS A record doesn't match.
     # Delete current record.
-    logging.info("Deleting DNS Record", current_dns)
+    logging.info(f"Deleting DNS Record {current_dns}")
     del_dns = (dh_api_url + api_key + "&cmd=dns-remove_record&record=" + fqdn + "&type=A&value=" + current_dns)
 
     push0 = subprocess.run(
@@ -85,7 +82,7 @@ else:       # Update the A record if Public IP and DNS A record doesn't match.
 
 
     # Add new record
-    logging.info("Adding DNS Record", public_ipv4)
+    logging.info(f"Adding DNS Record {public_ipv4}")
     update_dns = (dh_api_url + api_key + "&cmd=dns-add_record&record=" + fqdn + "&type=A&value=" + public_ipv4)
 
     # Update DNS record for fqdn
