@@ -3,7 +3,11 @@ import logging
 import time
 
 dh_api_url = "https://api.dreamhost.com/?key="
+
+# ----------- The api_key really really really should be an environment variable instead. Fixing this later. ----------- #
 api_key = "API-KEY-GOES-HERE"
+# ----------- The api_key really really really should be an environment variable instead. Fixing this later. ----------- #
+
 fqdn = "FQDN-GOES-HERE"
 log_loc = "/tmp/ddns.log"   # Change this to wherever you want your logs to go.
 
