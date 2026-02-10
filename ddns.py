@@ -1,15 +1,24 @@
 import subprocess
 import logging
 import time
+import os
+from dotenv import load_dotenv
 
 dh_api_url = "https://api.dreamhost.com/?key="
 
-# ----------- The api_key really really really should be an environment variable instead. Fixing this later. ----------- #
-api_key = "API-KEY-GOES-HERE"
-# ----------- The api_key really really really should be an environment variable instead. Fixing this later. ----------- #
+# Load environment variables.
+load_dotenv("ddns.env")
 
-fqdn = "FQDN-GOES-HERE"
-log_loc = "/tmp/ddns.log"   # Change this to wherever you want your logs to go.
+### ---------- CONFIGURE THESE IN YOUR ENVIRONMENT FILE "ddns.env"---------- ###
+### ...
+api_key = os.getenv("DH_API_KEY")
+fqdn = os.getenv("DH_FQDN")
+log_loc = os.getenv("DDNS_LOGS")
+### ...
+
+if not api_key:
+    raise ValueError("API_KEY not found. Check your .env file.")
+
 
 logging.basicConfig(
     filename=log_loc,
