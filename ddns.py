@@ -3,13 +3,14 @@ import logging
 import time
 import os
 from dotenv import load_dotenv
+from pathlib import Path
 
-dh_api_url = "https://api.dreamhost.com/?key="
+# Load .env from the same directory as this script
+env_path = Path(__file__).resolve().parent / ".env"
 
-# Load .env (or ddns.env) from the same directory as this script
-env_path = Path(__file__).resolve().parent / ".env"   # <-- change to your filename if not ddns.env
+load_dotenv(env_path)
 
-### ---------- CONFIGURE THESE IN YOUR ENVIRONMENT FILE "ddns.env" ---------- ###
+### ---------- CONFIGURE THESE IN YOUR ENVIRONMENT FILE ".env" ---------- ###
 ### ...
 api_key = os.getenv("DH_API_KEY")
 fqdn = os.getenv("DH_FQDN")
@@ -19,6 +20,7 @@ log_loc = os.getenv("DDNS_LOGS")
 if not api_key:
     raise ValueError("API_KEY not found. Check your .env file.")
 
+dh_api_url = "https://api.dreamhost.com/?key="
 
 logging.basicConfig(
     filename=log_loc,
