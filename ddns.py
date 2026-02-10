@@ -6,10 +6,10 @@ from dotenv import load_dotenv
 
 dh_api_url = "https://api.dreamhost.com/?key="
 
-# Load environment variables.
-load_dotenv("ddns.env")
+# Load .env (or ddns.env) from the same directory as this script
+env_path = Path(__file__).resolve().parent / ".env"   # <-- change to your filename if not ddns.env
 
-### ---------- CONFIGURE THESE IN YOUR ENVIRONMENT FILE "ddns.env"---------- ###
+### ---------- CONFIGURE THESE IN YOUR ENVIRONMENT FILE "ddns.env" ---------- ###
 ### ...
 api_key = os.getenv("DH_API_KEY")
 fqdn = os.getenv("DH_FQDN")
